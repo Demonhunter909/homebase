@@ -142,16 +142,19 @@ def register():
             return redirect("/register")
 
         profile_insert = (
-            supabase.table("profiles").insert({
-            "id": result.user.id,
-            "username": username,
-            "parent_id": session.get("user", {}).get("id")
-        })
+            supabase.table("profiles")
+            .insert({
+                "id": result.user.id,
+                "username": username,
+                "parent_id": session.get("user", {}).get("id")
+            })
+            .execute()
         )
 
         if profile_insert.error:
             flash("Profile creation failed: " + profile_insert.error.message, "error")
             return redirect("/register")
+
 
         session["user"] = {
             "id": result.user.id,
