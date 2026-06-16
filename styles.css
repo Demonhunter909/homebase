@@ -41,7 +41,7 @@ h1, h4 {
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-accountdropdown {
+#accountDropdown {
     position: relative;
     display: inline-block;
 }
