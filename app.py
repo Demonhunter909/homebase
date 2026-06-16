@@ -229,15 +229,7 @@ def index():
     page = int(request.args.get("page", 1))
     uploads, total_pages = get_paginated_category("home", page)
 
-    slides = []
-    if session.get("user_id"):
-        conn = get_db()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, filename FROM slideshow")
-        slides = cursor.fetchall()
-        conn.close()
-
-    return render_template("index.html", uploads=uploads, page=page, total_pages=total_pages, slides=slides, username=session.get("username"))
+    return render_template("index.html", uploads=uploads, page=page, total_pages=total_pages, username=session.get("username"))
 
 
 @app.route("/pricing")
