@@ -114,7 +114,7 @@ def login():
         }
         flash(f"Welcome back, {email}!", "success")
         return redirect("/")
-    return render_template("login.html", username=session.get("username"))
+    return render_template("login.html", username=session.get("user", {}).get("email"))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -141,11 +141,15 @@ def register():
             flash("Email already exists", "error")
             return redirect("/register")
 
-        supabase.table("profiles").insert({
+        profile_insert = supabase.table("profiles").insert({
             "id": result.user.id,
             "username": username,
             "parent_id": session.get("user", {}).get("id")
         })
+
+        if profile_insert.error:
+            flash("Profile creation failed: " + profile_insert.error.message, "error")
+            return redirect("/register")
 
         session["user"] = {
             "id": result.user.id,
@@ -154,8 +158,9 @@ def register():
 
         flash(f"Account created successfully! Welcome, {username}!", "success")
         return redirect("/")
-    
+
     return render_template("register.html", username=session.get("user", {}).get("email"))
+
 
 @app.route("/logout")
 def logout():
