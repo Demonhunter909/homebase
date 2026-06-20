@@ -1,16 +1,17 @@
 body {
     background-color: #f8034d;
-    color: #ffa1e3;
+    color: #ffafcb;
 }
 
+
 .navbar {
-    background-color: #ffa1e3;
+    background-color: #ffafcb;
     padding: 20px;
     text-align: center;
 }
 
 .navbar a {
-    color: #ffd8f9;
+    color: #2e71ab;
     text-decoration: none;
     font-size: 18px;
     margin: 0 15px;
